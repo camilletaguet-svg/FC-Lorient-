@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FC Lorient – Résultats Ligue 1 2025-26</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/f/ff/FC_Lorient_logo.svg/160px-FC_Lorient_logo.svg.png"
+           alt="Logo FC Lorient" class="club-logo" />
+      <div>
+        <h1>FC Lorient</h1>
+        <p class="subtitle">Ligue 1 – Saison 2025/2026</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Bilan saison -->
+    <section class="bilan" id="bilan">
+      <div class="stat-card" id="stat-j">
+        <span class="stat-num" id="played">–</span>
+        <span class="stat-label">Matchs joués</span>
+      </div>
+      <div class="stat-card win">
+        <span class="stat-num" id="wins">–</span>
+        <span class="stat-label">Victoires</span>
+      </div>
+      <div class="stat-card draw">
+        <span class="stat-num" id="draws">–</span>
+        <span class="stat-label">Nuls</span>
+      </div>
+      <div class="stat-card loss">
+        <span class="stat-num" id="losses">–</span>
+        <span class="stat-label">Défaites</span>
+      </div>
+      <div class="stat-card goals">
+        <span class="stat-num" id="gf">–</span>
+        <span class="stat-label">Buts marqués</span>
+      </div>
+      <div class="stat-card goals-against">
+        <span class="stat-num" id="ga">–</span>
+        <span class="stat-label">Buts encaissés</span>
+      </div>
+      <div class="stat-card pts">
+        <span class="stat-num" id="pts">–</span>
+        <span class="stat-label">Points</span>
+      </div>
+      <div class="stat-card rank">
+        <span class="stat-num" id="rank">–</span>
+        <span class="stat-label">Classement</span>
+      </div>
+    </section>
+
+    <!-- Clé API -->
+    <section class="api-box" id="api-box">
+      <div class="api-inner">
+        <p>
+          <strong>Clé API football-data.org requise.</strong>
+          Obtenez une clé gratuite sur
+          <a href="https://www.football-data.org/client/register" target="_blank" rel="noopener">football-data.org</a>,
+          puis entrez-la ci-dessous.
+        </p>
+        <div class="api-form">
+          <input type="text" id="api-key-input" placeholder="Votre clé API (ex: abc123...)" />
+          <button id="api-key-btn">Charger les résultats</button>
+        </div>
+        <p class="api-hint">La clé est stockée uniquement dans votre navigateur.</p>
+      </div>
+    </section>
+
+    <!-- Loader -->
+    <div id="loader" class="loader hidden">
+      <div class="spinner"></div>
+      <p>Chargement des résultats…</p>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div id="error-msg" class="error-msg hidden"></div>
+
+    <!-- Tableau des résultats -->
+    <section id="results-section" class="hidden">
+      <h2 class="section-title">Tous les matchs</h2>
+
+      <!-- Filtres -->
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="W">Victoires</button>
+        <button class="filter-btn" data-filter="D">Nuls</button>
+        <button class="filter-btn" data-filter="L">Défaites</button>
+        <button class="filter-btn" data-filter="upcoming">À venir</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>J.</th>
+              <th>Date</th>
+              <th class="team-col">Domicile</th>
+              <th class="score-col">Score</th>
+              <th class="team-col">Extérieur</th>
+              <th>Résultat</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Données démo -->
+    <section id="demo-section">
+      <div class="demo-box">
+        <p>Pas de clé API ? Visualisez un <button id="demo-btn" class="link-btn">exemple avec des données de démonstration</button>.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Données fournies par <a href="https://www.football-data.org" target="_blank" rel="noopener">football-data.org</a> · Site non officiel</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
