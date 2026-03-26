@@ -22,8 +22,8 @@
   <main>
 
     <!-- Bilan saison -->
-    <section class="bilan" id="bilan">
-      <div class="stat-card" id="stat-j">
+    <section class="bilan">
+      <div class="stat-card">
         <span class="stat-num" id="played">–</span>
         <span class="stat-label">Matchs joués</span>
       </div>
@@ -57,37 +57,15 @@
       </div>
     </section>
 
-    <!-- Clé API -->
-    <section class="api-box" id="api-box">
-      <div class="api-inner">
-        <p>
-          <strong>Clé API football-data.org requise.</strong>
-          Obtenez une clé gratuite sur
-          <a href="https://www.football-data.org/client/register" target="_blank" rel="noopener">football-data.org</a>,
-          puis entrez-la ci-dessous.
-        </p>
-        <div class="api-form">
-          <input type="text" id="api-key-input" placeholder="Votre clé API (ex: abc123...)" />
-          <button id="api-key-btn">Charger les résultats</button>
-        </div>
-        <p class="api-hint">La clé est stockée uniquement dans votre navigateur.</p>
-      </div>
-    </section>
-
     <!-- Loader -->
-    <div id="loader" class="loader hidden">
+    <div id="loader" class="loader">
       <div class="spinner"></div>
-      <p>Chargement des résultats…</p>
     </div>
-
-    <!-- Message d'erreur -->
-    <div id="error-msg" class="error-msg hidden"></div>
 
     <!-- Tableau des résultats -->
     <section id="results-section" class="hidden">
       <h2 class="section-title">Tous les matchs</h2>
 
-      <!-- Filtres -->
       <div class="filters">
         <button class="filter-btn active" data-filter="all">Tous</button>
         <button class="filter-btn" data-filter="W">Victoires</button>
@@ -97,7 +75,7 @@
       </div>
 
       <div class="table-wrapper">
-        <table id="results-table">
+        <table>
           <thead>
             <tr>
               <th>J.</th>
@@ -113,17 +91,10 @@
       </div>
     </section>
 
-    <!-- Données démo -->
-    <section id="demo-section">
-      <div class="demo-box">
-        <p>Pas de clé API ? Visualisez un <button id="demo-btn" class="link-btn">exemple avec des données de démonstration</button>.</p>
-      </div>
-    </section>
-
   </main>
 
   <footer>
-    <p>Données fournies par <a href="https://www.football-data.org" target="_blank" rel="noopener">football-data.org</a> · Site non officiel</p>
+    <p>Site non officiel · Données saison 2025/2026</p>
   </footer>
 
   <script src="script.js"></script>

@@ -2,7 +2,6 @@
 :root {
   --orange: #e8621a;
   --orange-dark: #c4521a;
-  --orange-light: #fdeee6;
   --navy: #1a2340;
   --navy-light: #253156;
   --white: #ffffff;
@@ -10,7 +9,6 @@
   --gray-100: #f0f0f0;
   --gray-200: #e0e0e0;
   --gray-400: #999;
-  --gray-700: #444;
   --green: #2ecc71;
   --green-bg: #eafaf1;
   --yellow: #f39c12;
@@ -102,13 +100,13 @@ main {
 
 .stat-card:hover { transform: translateY(-2px); }
 
-.stat-card.win   { border-top-color: var(--green); }
-.stat-card.draw  { border-top-color: var(--yellow); }
-.stat-card.loss  { border-top-color: var(--red); }
-.stat-card.goals { border-top-color: var(--orange); }
-.stat-card.goals-against { border-top-color: var(--navy); }
-.stat-card.pts   { border-top-color: var(--orange); background: var(--orange); color: var(--white); }
-.stat-card.rank  { border-top-color: var(--navy); background: var(--navy); color: var(--white); }
+.stat-card.win          { border-top-color: var(--green); }
+.stat-card.draw         { border-top-color: var(--yellow); }
+.stat-card.loss         { border-top-color: var(--red); }
+.stat-card.goals        { border-top-color: var(--orange); }
+.stat-card.goals-against{ border-top-color: var(--navy); }
+.stat-card.pts  { border-top-color: var(--orange); background: var(--orange); color: var(--white); }
+.stat-card.rank { border-top-color: var(--navy);   background: var(--navy);   color: var(--white); }
 
 .stat-num {
   display: block;
@@ -125,63 +123,10 @@ main {
   opacity: .75;
 }
 
-/* ===== API Box ===== */
-.api-box {
-  background: var(--white);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  margin-bottom: 24px;
-  border-left: 5px solid var(--orange);
-}
-
-.api-inner p { margin-bottom: 12px; font-size: .95rem; }
-
-.api-form {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-#api-key-input {
-  flex: 1;
-  min-width: 200px;
-  padding: 10px 14px;
-  border: 2px solid var(--gray-200);
-  border-radius: 6px;
-  font-size: .95rem;
-  outline: none;
-  transition: border-color .2s;
-}
-
-#api-key-input:focus { border-color: var(--orange); }
-
-#api-key-btn {
-  padding: 10px 22px;
-  background: var(--orange);
-  color: var(--white);
-  border: none;
-  border-radius: 6px;
-  font-size: .95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .2s;
-}
-
-#api-key-btn:hover { background: var(--orange-dark); }
-
-.api-hint {
-  font-size: .8rem;
-  color: var(--gray-400);
-  margin-top: 8px !important;
-  margin-bottom: 0 !important;
-}
-
 /* ===== Loader ===== */
 .loader {
   text-align: center;
-  padding: 48px;
-  color: var(--gray-400);
+  padding: 32px;
 }
 
 .spinner {
@@ -190,21 +135,10 @@ main {
   border-top-color: var(--orange);
   border-radius: 50%;
   animation: spin .8s linear infinite;
-  margin: 0 auto 16px;
+  margin: 0 auto;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* ===== Error ===== */
-.error-msg {
-  background: var(--red-bg);
-  color: var(--red);
-  border: 1px solid #f5b7b1;
-  border-radius: var(--radius);
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  font-size: .95rem;
-}
 
 /* ===== Section title ===== */
 .section-title {
@@ -245,7 +179,7 @@ main {
   transition: all .2s;
 }
 
-.filter-btn:hover { border-color: var(--orange); color: var(--orange); }
+.filter-btn:hover  { border-color: var(--orange); color: var(--orange); }
 .filter-btn.active { background: var(--orange); border-color: var(--orange); color: var(--white); }
 
 /* ===== Table ===== */
@@ -287,12 +221,10 @@ tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: var(--gray-50); }
 
 tbody td {
-  padding: 12px 12px;
+  padding: 12px;
   text-align: center;
   vertical-align: middle;
 }
-
-.team-col { text-align: left; }
 
 td.team-name {
   font-weight: 600;
@@ -301,7 +233,6 @@ td.team-name {
 
 td.team-name.lorient { color: var(--orange); }
 
-/* Score */
 .score-box {
   display: inline-flex;
   align-items: center;
@@ -312,7 +243,6 @@ td.team-name.lorient { color: var(--orange); }
 
 .score-sep { color: var(--gray-400); font-weight: 400; }
 
-/* Résultat badge */
 .badge {
   display: inline-block;
   padding: 4px 12px;
@@ -323,34 +253,12 @@ td.team-name.lorient { color: var(--orange); }
   letter-spacing: .4px;
 }
 
-.badge-W  { background: var(--green-bg); color: #1a7a45; }
-.badge-D  { background: var(--yellow-bg); color: #8a6000; }
-.badge-L  { background: var(--red-bg); color: #a93226; }
-.badge-N  { background: var(--gray-100); color: var(--gray-400); }
+.badge-W { background: var(--green-bg);  color: #1a7a45; }
+.badge-D { background: var(--yellow-bg); color: #8a6000; }
+.badge-L { background: var(--red-bg);    color: #a93226; }
+.badge-N { background: var(--gray-100);  color: var(--gray-400); }
 
-/* Journée numéro */
 td.jornada { color: var(--gray-400); font-size: .82rem; }
-
-/* ===== Demo section ===== */
-#demo-section { margin-top: 20px; }
-
-.demo-box {
-  text-align: center;
-  padding: 20px;
-  color: var(--gray-400);
-  font-size: .9rem;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--orange);
-  font-size: inherit;
-  cursor: pointer;
-  font-weight: 600;
-  text-decoration: underline;
-  padding: 0;
-}
 
 /* ===== Footer ===== */
 footer {
