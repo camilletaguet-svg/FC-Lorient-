@@ -66,33 +66,57 @@ filterBtns.forEach(btn => {
   });
 });
 
-// ---------- Fetch ----------
+// ---------- Fetch avec fallback proxy CORS ----------
+// L'API football-data.org supporte CORS mais certains navigateurs
+// bloquent les requêtes depuis file:// — on bascule automatiquement
+// sur un proxy CORS si la requête directe échoue.
+const CORS_PROXY = 'https://corsproxy.io/?url=';
+
+async function apiFetch(url, apiKey) {
+  // 1. Tentative directe
+  try {
+    const res = await fetch(url, {
+      headers: { 'X-Auth-Token': apiKey },
+    });
+    // fetch() ne lève pas d'exception sur les erreurs HTTP, seulement réseau
+    return res;
+  } catch (_) {
+    // 2. Fallback proxy (erreur réseau = probablement CORS)
+  }
+  // corsproxy.io transmet les headers personnalisés, dont X-Auth-Token
+  const proxied = CORS_PROXY + encodeURIComponent(url);
+  return fetch(proxied, {
+    headers: { 'X-Auth-Token': apiKey },
+  });
+}
+
+async function checkResponse(res) {
+  if (!res.ok) {
+    if (res.status === 401 || res.status === 403) {
+      throw new Error('Clé API invalide ou accès refusé. Vérifiez votre clé sur football-data.org.');
+    }
+    if (res.status === 429) {
+      throw new Error('Trop de requêtes. Attendez une minute puis réessayez (limite API gratuite).');
+    }
+    throw new Error(`Erreur API : ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
 async function fetchData(apiKey) {
   showLoader();
   clearError();
 
   try {
-    // Récupère les matchs
     const matchesUrl = `${BASE_URL}/teams/${TEAM_ID}/matches?season=${SEASON}&competitions=${COMP_CODE}`;
-    const matchesRes = await fetch(matchesUrl, { headers: { 'X-Auth-Token': apiKey } });
+    const matchesRes = await apiFetch(matchesUrl, apiKey);
+    const matchesData = await checkResponse(matchesRes);
 
-    if (!matchesRes.ok) {
-      if (matchesRes.status === 401 || matchesRes.status === 403) {
-        throw new Error('Clé API invalide ou accès refusé. Vérifiez votre clé sur football-data.org.');
-      }
-      if (matchesRes.status === 429) {
-        throw new Error('Trop de requêtes. Attendez une minute puis réessayez (limite API gratuite).');
-      }
-      throw new Error(`Erreur API : ${matchesRes.status} ${matchesRes.statusText}`);
-    }
-
-    const matchesData = await matchesRes.json();
-
-    // Récupère le classement (facultatif, ignoré si erreur)
+    // Classement (facultatif)
     let rank = null;
     try {
       const standingsUrl = `${BASE_URL}/competitions/${COMP_CODE}/standings?season=${SEASON}`;
-      const standRes = await fetch(standingsUrl, { headers: { 'X-Auth-Token': apiKey } });
+      const standRes = await apiFetch(standingsUrl, apiKey);
       if (standRes.ok) {
         const standData = await standRes.json();
         const table = standData.standings?.find(s => s.type === 'TOTAL')?.table || [];
