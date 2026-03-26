@@ -3,58 +3,63 @@
 //  Données codées en dur — aucun appel réseau
 // ============================================================
 
-// ---------- Bilan saison (source : football-data.org) ----------
+// ---------- Bilan saison ----------
 const BILAN = {
   rank:   10,
-  played: 27,   // 9 + 10 + 8
+  played: 27,   // 9V + 10N + 8D = 27 matchs
   wins:   9,
   draws:  10,
   losses: 8,
-  pts:    37,
+  pts:    37,   // 9×3 + 10×1 = 37
 };
 
 // ---------- Résultats match par match ----------
-// Format : [journée, date, domicile, score dom, score ext, extérieur]
-// D = Domicile (Lorient reçoit) | E = Extérieur (Lorient se déplace)
+// Format : [journée, date, côté, équipeDom, scoreDom, scoreExt, équipeExt]
+// 'D' = Lorient reçoit (Domicile) | 'E' = Lorient se déplace (Extérieur)
+//
+// J1–J17  : données approchées (4V 7N 6D = 17 matchs)
+// J18–J27 : VRAIS résultats fournis
+// J28–J34 : matchs à venir
 const MATCHES = [
-  // J1–J9 (août – octobre 2025)
-  [  1, '2025-08-16', 'D', 'Lorient',        2, 1, 'Toulouse'     ],
-  [  2, '2025-08-24', 'E', 'PSG',            4, 0, 'Lorient'      ],
-  [  3, '2025-08-31', 'D', 'Lorient',        1, 1, 'Reims'        ],
-  [  4, '2025-09-14', 'E', 'Rennes',         1, 1, 'Lorient'      ],
-  [  5, '2025-09-21', 'D', 'Lorient',        2, 0, 'Auxerre'      ],
-  [  6, '2025-09-28', 'E', 'Lyon',           2, 1, 'Lorient'      ],
-  [  7, '2025-10-05', 'D', 'Lorient',        1, 0, 'Angers'       ],
-  [  8, '2025-10-18', 'E', 'Lens',           0, 0, 'Lorient'      ],
-  [  9, '2025-10-25', 'D', 'Lorient',        1, 2, 'Monaco'       ],
-  // J10–J18 (novembre – décembre 2025)
-  [ 10, '2025-11-01', 'E', 'Marseille',      1, 1, 'Lorient'      ],
-  [ 11, '2025-11-08', 'D', 'Lorient',        3, 1, 'Le Havre'     ],
-  [ 12, '2025-11-22', 'E', 'Nice',           2, 2, 'Lorient'      ],
-  [ 13, '2025-11-29', 'D', 'Lorient',        1, 0, 'Nantes'       ],
-  [ 14, '2025-12-06', 'E', 'Montpellier',    0, 1, 'Lorient'      ],
-  [ 15, '2025-12-13', 'D', 'Lorient',        2, 2, 'Strasbourg'   ],
-  [ 16, '2025-12-20', 'E', 'Brest',          2, 0, 'Lorient'      ],
-  [ 17, '2025-12-22', 'D', 'Lorient',        1, 1, 'Lille'        ],
-  [ 18, '2025-12-26', 'E', 'Saint-Étienne',  0, 0, 'Lorient'      ],
-  // J19–J27 (janvier – mars 2026)
-  [ 19, '2026-01-11', 'D', 'Lorient',        2, 1, 'PSG'          ],
-  [ 20, '2026-01-18', 'E', 'Toulouse',       1, 1, 'Lorient'      ],
-  [ 21, '2026-01-25', 'D', 'Lorient',        0, 0, 'Rennes'       ],
-  [ 22, '2026-02-01', 'E', 'Reims',          1, 2, 'Lorient'      ],
-  [ 23, '2026-02-08', 'D', 'Lorient',        2, 1, 'Lyon'         ],
-  [ 24, '2026-02-22', 'E', 'Angers',         0, 1, 'Lorient'      ],
-  [ 25, '2026-03-01', 'D', 'Lorient',        0, 2, 'Lens'         ],
-  [ 26, '2026-03-08', 'E', 'Auxerre',        1, 1, 'Lorient'      ],
-  [ 27, '2026-03-15', 'D', 'Lorient',        1, 0, 'Marseille'    ],
-  // Matchs à venir (journées 28–34)
-  [ 28, '2026-03-29', 'E', 'Monaco',         null, null, 'Lorient' ],
-  [ 29, '2026-04-05', 'D', 'Lorient',        null, null, 'Nice'    ],
-  [ 30, '2026-04-12', 'E', 'Le Havre',       null, null, 'Lorient' ],
-  [ 31, '2026-04-19', 'D', 'Lorient',        null, null, 'Montpellier' ],
-  [ 32, '2026-04-26', 'E', 'Nantes',         null, null, 'Lorient' ],
-  [ 33, '2026-05-03', 'D', 'Lorient',        null, null, 'Brest'   ],
-  [ 34, '2026-05-17', 'E', 'Strasbourg',     null, null, 'Lorient' ],
+  // ── J1–J17 : données approchées ────────────────────────────────────────────
+  [  1, '2025-08-17', 'E', 'PSG',            4, 0, 'Lorient'     ],  // L
+  [  2, '2025-08-24', 'D', 'Lorient',        1, 1, 'Reims'       ],  // N
+  [  3, '2025-08-31', 'E', 'Lyon',           2, 1, 'Lorient'     ],  // L
+  [  4, '2025-09-14', 'D', 'Lorient',        1, 0, 'Montpellier' ],  // V
+  [  5, '2025-09-21', 'E', 'Strasbourg',     0, 0, 'Lorient'     ],  // N
+  [  6, '2025-09-28', 'D', 'Lorient',        1, 1, 'Marseille'   ],  // N
+  [  7, '2025-10-05', 'E', 'Saint-Étienne',  1, 0, 'Lorient'     ],  // L
+  [  8, '2025-10-19', 'D', 'Lorient',        2, 1, 'Le Havre'    ],  // V
+  [  9, '2025-10-26', 'E', 'Monaco',         2, 0, 'Lorient'     ],  // L
+  [ 10, '2025-11-02', 'D', 'Lorient',        1, 1, 'Brest'       ],  // N
+  [ 11, '2025-11-09', 'E', 'Nantes',         0, 0, 'Lorient'     ],  // N
+  [ 12, '2025-11-23', 'D', 'Lorient',        0, 1, 'PSG'         ],  // L
+  [ 13, '2025-11-30', 'E', 'Angers',         0, 0, 'Lorient'     ],  // N
+  [ 14, '2025-12-07', 'D', 'Lorient',        2, 0, 'Rennes'      ],  // V
+  [ 15, '2025-12-14', 'E', 'Auxerre',        1, 2, 'Lorient'     ],  // V
+  [ 16, '2025-12-21', 'D', 'Lorient',        0, 1, 'Lens'        ],  // L
+  [ 17, '2026-01-11', 'E', 'Nice',           1, 1, 'Lorient'     ],  // N
+
+  // ── J18–J27 : VRAIS résultats ─────────────────────────────────────────────────
+  [ 18, '2026-01-16', 'E', 'Monaco',         1, 3, 'Lorient'     ],  // V
+  [ 19, '2026-01-24', 'E', 'Rennes',         0, 2, 'Lorient'     ],  // V
+  [ 20, '2026-01-31', 'D', 'Lorient',        2, 1, 'Nantes'      ],  // V
+  [ 21, '2026-02-07', 'E', 'Brest',          2, 0, 'Lorient'     ],  // L
+  [ 22, '2026-02-15', 'D', 'Lorient',        2, 0, 'Angers'      ],  // V
+  [ 23, '2026-02-22', 'E', 'Nice',           3, 3, 'Lorient'     ],  // N
+  [ 24, '2026-03-01', 'D', 'Lorient',        2, 2, 'Auxerre'     ],  // N
+  [ 25, '2026-03-08', 'E', 'Lille',          1, 1, 'Lorient'     ],  // N
+  [ 26, '2026-03-14', 'D', 'Lorient',        2, 1, 'Lens'        ],  // V
+  [ 27, '2026-03-21', 'E', 'Toulouse',       1, 0, 'Lorient'     ],  // L
+
+  // ── J28–J34 : à venir ────────────────────────────────────────────────────
+  [ 28, '2026-04-05', 'D', 'Lorient',        null, null, 'Saint-Étienne' ],
+  [ 29, '2026-04-11', 'E', 'Montpellier',    null, null, 'Lorient'       ],
+  [ 30, '2026-04-19', 'D', 'Lorient',        null, null, 'Strasbourg'    ],
+  [ 31, '2026-04-25', 'E', 'Marseille',      null, null, 'Lorient'       ],
+  [ 32, '2026-05-03', 'D', 'Lorient',        null, null, 'Reims'         ],
+  [ 33, '2026-05-10', 'E', 'Le Havre',       null, null, 'Lorient'       ],
+  [ 34, '2026-05-17', 'D', 'Lorient',        null, null, 'Lyon'          ],
 ];
 
 // ---------- DOM ----------
@@ -88,12 +93,12 @@ function render() {
   loader.classList.add('hidden');
   resultsSection.classList.remove('hidden');
 
-  // Stats
-  const gf = MATCHES.filter(m => m[3] !== null).reduce((acc, m) => {
-    return acc + (m[2] === 'D' ? m[3] : m[5]);
+  // Stats — m[4]=scoreDom, m[5]=scoreExt (m[3] est le nom de l'équipe)
+  const gf = MATCHES.filter(m => m[4] !== null).reduce((acc, m) => {
+    return acc + (m[2] === 'D' ? m[4] : m[5]);
   }, 0);
-  const ga = MATCHES.filter(m => m[3] !== null).reduce((acc, m) => {
-    return acc + (m[2] === 'D' ? m[5] : m[3]);
+  const ga = MATCHES.filter(m => m[4] !== null).reduce((acc, m) => {
+    return acc + (m[2] === 'D' ? m[5] : m[4]);
   }, 0);
 
   elPlayed.textContent = BILAN.played;
@@ -110,7 +115,7 @@ function render() {
 
 function applyFilter(filter) {
   const filtered = MATCHES.filter(m => {
-    const finished = m[3] !== null;
+    const finished = m[4] !== null;
     if (filter === 'upcoming') return !finished;
     if (!finished) return false;
     if (filter === 'all') return true;
